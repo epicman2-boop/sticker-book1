@@ -1,88 +1,65 @@
-import { LitElement, html, css } from 'lit';
-
-const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
+import { LitElement, html, css } from "lit";
+import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
+import '../src/badge-sticker.js';
 
 class MeritBadge extends LitElement {
   static properties = {
-    header: { type: String },
-  }
+    unlocked: { type: Boolean },
+    date: { type: Date },
+    logo: { type: String },
+    title: { type: String },
+    detailsIcon: { type: String },
+    verificationLink: { type: String },
+    skillsToUnlock: { type: Array },
+    skills: { type: Array },
+    criteriaName: { type: String },
+  };
 
   static styles = css`
-    :host {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: calc(10px + 2vmin);
-      color: #1a2b42;
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: center;
-      background-color: var(--merit-badge-background-color);
-    }
-
-    main {
-      flex-grow: 1;
-    }
-
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin infinite 20s linear;
-    }
-
-    @keyframes app-logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
-      align-items: center;
-    }
-
-    .app-footer a {
-      margin-left: 5px;
+    #badge {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      border-radius: 50%;
     }
   `;
 
   constructor() {
     super();
-    this.header = 'My app';
   }
 
   render() {
     return html`
-      <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
+      <badge-sticker id="badge">
+        <simple-icon-button
+          icon="cancel"
+          @click="${this.skillClick}"
+        ></simple-icon-button>
+      </badge-sticker>
 
-        <p>Edit <code>src/MeritBadge.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/guides/developing-components/code-examples/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
-      </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
-      </p>
+      <absolute-position-behavior
+        justify
+        position="bottom"
+        allow-overlap
+        sticky
+        auto
+        .target="${this.activeNode}"
+        ?hidden="${!this.skillsOpened}"
+      >
+      </absolute-position-behavior>
     `;
+  }
+
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+    this.activeNode = this.shadowRoot.querySelector("#badge");
+  }
+
+  skillClick(e) {
+    this.skillsOpened = !this.skillsOpened;
   }
 }
 
-customElements.define('merit-badge', MeritBadge);
+customElements.define("merit-badge", MeritBadge);
