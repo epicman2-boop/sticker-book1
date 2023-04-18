@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import "../src/circle-wrap.js";
 
 class BadgeSticker extends LitElement {
   static properties = {
@@ -13,31 +14,40 @@ class BadgeSticker extends LitElement {
   };
 
   static styles = css`
-    .circle {
-      width: 200px;
-      height: 200px;
-      background: red;
-      border-radius: 50%;
-    }
-    .badge {
-      position: relative;
-      width: 400px;
-      border-radius: 50%;
-      transform: rotate(-50deg);
-    }
-    h1 span {
+    .text {
       font: 26px Monaco, MonoSpace;
-      height: 200px;
+      height: 100%;
+      width: 100%;
       position: absolute;
-      width: 20px;
       left: 0;
       top: 0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
       transform-origin: bottom center;
+      transform: rotate(10deg);
     }
-    
+    .page-wrap {
+      position: relative;
+    }
+    .circle {
+      padding: 20px;
+      margin: 10px;
+      background: #ff0030;
+      color: #fff;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1.3em;
+      border: 2px dashed #fff;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      box-shadow: 0 0 0 4px #ff0030, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+      text-shadow: -1px -1px #aa3030;
+      font-weight: normal;
+    }
   `;
 
-//position first, warp later
 
   constructor() {
     super();
@@ -48,11 +58,8 @@ class BadgeSticker extends LitElement {
   render() {
     return html`
       <div class="circle">
-        <div id="page-wrap">
-          <div class="badge">
-            <h1>${this.title}</h1>
-          </div>
-        </div>
+        <circle-wrap>
+        </circle-wrap>
       </div>
     `;
   }

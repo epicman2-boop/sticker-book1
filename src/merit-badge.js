@@ -5,12 +5,11 @@ import '../src/badge-sticker.js';
 class MeritBadge extends LitElement {
   static properties = {
     unlocked: { type: Boolean },
-    date: { type: Date },
+    date: { type: String },
     logo: { type: String },
     title: { type: String },
     detailsIcon: { type: String },
     verificationLink: { type: String },
-    skillsToUnlock: { type: Array },
     skills: { type: Array },
     criteriaName: { type: String },
   };
@@ -48,17 +47,6 @@ class MeritBadge extends LitElement {
       >
       </absolute-position-behavior>
     `;
-  }
-
-  firstUpdated(changedProperties) {
-    if (super.firstUpdated) {
-      super.firstUpdated(changedProperties);
-    }
-    this.activeNode = this.shadowRoot.querySelector("#badge");
-  }
-
-  skillClick(e) {
-    this.skillsOpened = !this.skillsOpened;
   }
 }
 
