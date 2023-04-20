@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
-import '../src/badge-sticker.js';
+import "../src/badge-sticker.js";
 
 class MeritBadge extends LitElement {
   static properties = {
@@ -20,6 +20,10 @@ class MeritBadge extends LitElement {
       height: 100px;
       background: blue;
       border-radius: 50%;
+    }
+    simple-icon {
+      --simple-icon-width: 120px;
+      --simple-icon-height: 120px;
     }
   `;
 

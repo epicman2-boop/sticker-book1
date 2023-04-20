@@ -1,5 +1,7 @@
 import { LitElement, html, css } from "lit";
 import "../src/circle-wrap.js";
+import "@lrnwebcomponents/simple-icon/simple-icon.js";
+import "@lrnwebcomponents/simple-icon/lib/simple-icons.js";
 
 class BadgeSticker extends LitElement {
   static properties = {
@@ -29,11 +31,22 @@ class BadgeSticker extends LitElement {
       text-shadow: -1px -1px #aa3030;
       font-weight: normal;
     }
-    
+
     circle-wrap {
       position: absolute;
       top: 50%;
-      left: -7%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    simple-icon {
+      --simple-icon-width: 200px;
+      --simple-icon-height: 200px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
     }
   `;
 
@@ -44,7 +57,12 @@ class BadgeSticker extends LitElement {
   render() {
     return html`
       <div class="circle">
-        <circle-wrap title="Merit Badge" date="2020-01-01"></circle-wrap>
+          <simple-icon
+            id="eye"
+            icon="av:games"
+            accent-color="purple"
+          ></simple-icon>
+          <circle-wrap title="Merit Badge" date="2020-01-01"></circle-wrap>
       </div>
     `;
   }
