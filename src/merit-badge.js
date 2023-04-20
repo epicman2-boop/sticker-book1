@@ -21,10 +21,6 @@ class MeritBadge extends LitElement {
       background: blue;
       border-radius: 50%;
     }
-    simple-icon {
-      --simple-icon-width: 120px;
-      --simple-icon-height: 120px;
-    }
   `;
 
   constructor() {
@@ -51,6 +47,17 @@ class MeritBadge extends LitElement {
       >
       </absolute-position-behavior>
     `;
+  }
+
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+    this.activeNode = this.shadowRoot.querySelector("#badge");
+  }
+
+  skillClick(e) {
+    this.skillsOpened = !this.skillsOpened;
   }
 }
 
