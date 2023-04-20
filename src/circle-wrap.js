@@ -1,87 +1,131 @@
 import { LitElement, html, css } from "lit";
+const sheet = new CSSStyleSheet();
 
 class CircleWrap extends LitElement {
   static get tag() {
     return "circle-wrap";
   }
 
+  static get styles() {
+    return css`
+      .container {
+        width: 500px;
+        height: 500px;
+        top: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+      }
+
+      div.circTxt1,
+      div.circTxt2 {
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      div.circTxt1 p {
+        color: #ff0;
+        font-size: 2em;
+        margin: 0;
+      }
+
+      div.circTxt2 p {
+        color: #f00;
+        font-size: 0.8em;
+        margin: 0;
+      }
+
+      @keyframes moveAround {
+        0% {
+          transform: rotate(-2deg);
+        }
+        25% {
+          transform: rotate(2deg);
+        }
+        50% {
+          transform: rotate(-2deg);
+        }
+        75% {
+          transform: rotate(2deg);
+        }
+        100% {
+          transform: rotate(-2deg);
+        }
+      }
+    `;
+  }
+
   static get properties() {
     return {
-      text: { type: String },
-      radius: { type: Number },
-      fontSize: { type: Number },
+      title: { type: String },
+      date: { type: String },
     };
   }
 
   constructor() {
     super();
-    this.text = "Hello, world!";
-    this.radius = 100;
-    this.fontSize = 15;
-    this._canvas = null;
-  }
-
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        position: relative;
-      }
-      canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    `;
-  }
-
-  firstUpdated() {
-    this._canvas = this.shadowRoot.querySelector("canvas");
-    this._canvas.width = this.radius * 2;
-    this._canvas.height = this.radius * 2;
-    this._drawTextCircle();
-  }
-
-  updated(changedProps) {
-    if (
-      changedProps.has("text") ||
-      changedProps.has("radius") ||
-      changedProps.has("fontSize")
-    ) {
-      this._drawTextCircle();
-    }
-  }
-
-  _drawTextCircle() {
-    const ctx = this._canvas.getContext("2d");
-    const centerX = this.radius;
-    const centerY = this.radius;
-    const text = this.text;
-    const radius = this.radius;
-
-    ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.stroke();
-
-    ctx.font = `${this.fontSize}px Monaco, MonoSpace`;
-    ctx.fillStyle = "#000";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    for (let i = 0; i < text.length; i++) {
-      const char = text.charAt(i);
-      const angle = i * ((2 * Math.PI) / text.length);
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.rotate(angle);
-      ctx.fillText(char, 0, -radius);
-      ctx.restore();
-    }
+    this.title = "";
+    this.date = "";
   }
 
   render() {
-    return html` <canvas></canvas> `;
+    return html`<div class="container"></div>`;
+  }
+
+  updated() {
+    this.generateCircularText(
+      "circTxt1",
+      this.title,
+      200,
+      -170,
+      -100,
+      "font-size: 34px; color:#f70;",
+      "transform: scaleY(-1) scaleX(-1); position:absolute"
+    );
+    this.generateCircularText(
+      "circTxt2",
+      this.date,
+      200,
+      90,
+      -40,
+      "font-size: 34px; color:#f00;",
+      ""
+    );
+  }
+
+  generateCircularText(
+    className,
+    text,
+    radius,
+    range,
+    startPos,
+    css,
+    bottomCss
+  ) {
+    const textArr = text.split("");
+    const container = this.shadowRoot.querySelector(".container");
+    const containerHeight = container.clientHeight;
+    const newElement = document.createElement("div");
+    newElement.setAttribute("class", className);
+
+    const deg = range / textArr.length;
+    textArr.forEach((ch) => {
+      ch = `<p style="height:${radius}px;${css};transform:rotate(${startPos}deg);left:50%;top:${
+        containerHeight / 2 - radius
+      }px;position:absolute;transform-origin:0 100%">
+             <span style="${bottomCss}">${ch}</span>
+           </p>`;
+      newElement.innerHTML += ch;
+      startPos += deg;
+    });
+
+    container.appendChild(newElement);
   }
 }
+
 customElements.define(CircleWrap.tag, CircleWrap);

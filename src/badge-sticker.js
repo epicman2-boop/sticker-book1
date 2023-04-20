@@ -4,9 +4,7 @@ import "../src/circle-wrap.js";
 class BadgeSticker extends LitElement {
   static properties = {
     unlocked: { type: Boolean },
-    date: { type: String },
     logo: { type: String },
-    title: { type: String },
     detailsIcon: { type: String },
     verificationLink: { type: String },
     skills: { type: Array },
@@ -14,25 +12,10 @@ class BadgeSticker extends LitElement {
   };
 
   static styles = css`
-    .text {
-      font: 26px Monaco, MonoSpace;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      transform-origin: bottom center;
-      transform: rotate(10deg);
-    }
-    .page-wrap {
-      position: relative;
-    }
     .circle {
+      position: relative;
       padding: 20px;
-      margin: 10px;
+      margin: 20px;
       background: #ff0030;
       color: #fff;
       font-size: 21px;
@@ -40,26 +23,28 @@ class BadgeSticker extends LitElement {
       line-height: 1.3em;
       border: 2px dashed #fff;
       border-radius: 50%;
-      width: 200px;
-      height: 200px;
+      width: 400px;
+      height: 400px;
       box-shadow: 0 0 0 4px #ff0030, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
       text-shadow: -1px -1px #aa3030;
       font-weight: normal;
     }
+    
+    circle-wrap {
+      position: absolute;
+      top: 50%;
+      left: -7%;
+    }
   `;
-
 
   constructor() {
     super();
-    this.title = "Title";
-    this.date = "Date";
   }
 
   render() {
     return html`
       <div class="circle">
-        <circle-wrap>
-        </circle-wrap>
+        <circle-wrap title="Merit Badge" date="2020-01-01"></circle-wrap>
       </div>
     `;
   }
