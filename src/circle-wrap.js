@@ -7,14 +7,19 @@ class CircleWrap extends LitElement {
     return "circle-wrap";
   }
 
+  static get properties() {
+    return {
+      title: { type: String },
+      date: { type: String },
+    };
+  }
+
   static get styles() {
     return css`
       .container {
-        width: 500px;
-        height: 500px;        
-        margin: auto;
+        width: 300px;
+        height: 300px;
       }
-
       div.circTxt1,
       div.circTxt2 {
         border-radius: 50%;
@@ -23,19 +28,16 @@ class CircleWrap extends LitElement {
         width: 100%;
         height: 100%;
       }
-
       div.circTxt1 p {
         color: #ff0;
         font-size: 2em;
         margin: 0;
       }
-
       div.circTxt2 p {
         color: #f00;
         font-size: 0.8em;
         margin: 0;
       }
-
       @keyframes moveAround {
         0% {
           transform: rotate(-2deg);
@@ -56,13 +58,6 @@ class CircleWrap extends LitElement {
     `;
   }
 
-  static get properties() {
-    return {
-      title: { type: String },
-      date: { type: String },
-    };
-  }
-
   constructor() {
     super();
     this.title = "";
@@ -77,19 +72,19 @@ class CircleWrap extends LitElement {
     this.generateCircularText(
       "circTxt1",
       this.title,
-      200,
+      100,
       -170,
       -100,
-      "font-size: 34px; color:#f70;",
+      "font-size: 20px; color:var(--simple-colors-default-theme-accent-2);",
       "transform: scaleY(-1) scaleX(-1); position:absolute"
     );
     this.generateCircularText(
       "circTxt2",
       this.date,
-      200,
+      100,
       90,
       -40,
-      "font-size: 34px; color:#f00;",
+      "font-size: 20px; color:var(--simple-colors-default-theme-accent-2);",
       ""
     );
   }

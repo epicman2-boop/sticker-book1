@@ -3,7 +3,7 @@ import { LitElement, html, css } from "lit";
 class LockedBadge extends LitElement {
   static get properties() {
     return {
-      locked: { type: Boolean },
+      unlocked: { type: Boolean },
     };
   }
 
@@ -18,15 +18,15 @@ class LockedBadge extends LitElement {
       line-height: 1.3em;
       border: 2px dashed #aa3030;
       border-radius: 50%;
-      width: 400px;
-      height: 400px;
+      width: 200px;
+      height: 200px;
       text-shadow: -1px -1px #aa3030;
       font-weight: normal;
     }
 
     simple-icon {
-      --simple-icon-width: 200px;
-      --simple-icon-height: 200px;
+      --simple-icon-width: 75px;
+      --simple-icon-height: 75px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -37,13 +37,13 @@ class LockedBadge extends LitElement {
 
   constructor() {
     super();
-    this.locked = true;
+    this.unlocked = false;
   }
 
   render() {
     return html`
       <div class="circle">
-        <simple-icon icon="icons:lock" ?hidden="${this.locked}"></simple-icon>
+        <simple-icon icon="icons:lock"></simple-icon>
       </div>
     `;
   }

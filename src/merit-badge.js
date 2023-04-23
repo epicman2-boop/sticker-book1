@@ -1,10 +1,14 @@
 import { LitElement, html, css } from "lit";
 import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
+import "@lrnwebcomponents/simple-icon/simple-icon.js";
+import "@lrnwebcomponents/simple-icon/lib/simple-icons.js";
+import "@lrnwebcomponents/simple-icon/lib/simple-icon-button.js";
+import "../src/circle-wrap.js";
 import "../src/badge-sticker.js";
+import "../src/locked-badge.js";
 
 class MeritBadge extends LitElement {
   static properties = {
-    unlocked: { type: Boolean },
     date: { type: String },
     logo: { type: String },
     title: { type: String },
@@ -12,29 +16,39 @@ class MeritBadge extends LitElement {
     verificationLink: { type: String },
     skills: { type: Array },
     criteriaName: { type: String },
+    skillsOpened: { type: Boolean },
   };
 
   static styles = css`
+
+
     #badge {
-      width: 100px;
-      height: 100px;
-      background: blue;
-      border-radius: 50%;
+      position: relative;
+      z-index: 2;
     }
   `;
 
   constructor() {
     super();
+    this.skills = [];
+    this.skillsOpened = false;
   }
 
   render() {
     return html`
-      <badge-sticker id="badge">
+      <locked-badge ?hidden="${this.skillsOpened}"></locked-badge>
+      <div id="badge">
+        <badge-sticker
+          id="badge-sticker"
+          logo="${this.logo}"
+          title="${this.title}"
+          date="${this.date}"
+        ></badge-sticker>
         <simple-icon-button
           icon="cancel"
           @click="${this.skillClick}"
         ></simple-icon-button>
-      </badge-sticker>
+      </div>
 
       <absolute-position-behavior
         justify
@@ -45,6 +59,14 @@ class MeritBadge extends LitElement {
         .target="${this.activeNode}"
         ?hidden="${!this.skillsOpened}"
       >
+        ${this.skills.map(
+          (item) => html` <ol>
+            <li>List here</li>
+            <li>List here</li>
+            <li>List here</li>
+            <li>List here</li>
+          </ol>`
+        )}
       </absolute-position-behavior>
     `;
   }
@@ -58,6 +80,7 @@ class MeritBadge extends LitElement {
 
   skillClick(e) {
     this.skillsOpened = !this.skillsOpened;
+    console.log("skillClick", this.skillsOpened);
   }
 }
 
